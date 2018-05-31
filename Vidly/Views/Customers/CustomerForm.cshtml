@@ -1,0 +1,49 @@
+﻿@model Vidly.ViewModels.CustomerFormViewModel
+@{
+    /**/
+
+    ViewBag.Title = "New";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>New Customer</h2>
+
+@using (Html.BeginForm("Save", "Customers"))
+{
+    @*@Html.ValidationSummary()*@
+    <div class="form-group">
+        @Html.LabelFor(m => m.Customer.Name)
+        @Html.TextBoxFor(m => m.Customer.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Customer.Name)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Customer.birthdate)
+        @Html.TextBoxFor(m => m.Customer.birthdate, "{0:d MMM yyyy}", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Customer.birthdate)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Customer.MembershipTypeId)
+        @*@Html.Label("Membership Type")*@
+        @Html.DropDownListFor(m => m.Customer.MembershipTypeId, new SelectList(Model.MembershipTypes, "Id", "Name"), "Select Membership Type", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Customer.MembershipTypeId)
+        @*@Html.DropDownList*@
+    </div>
+
+    <div class="checkbox">
+        <label>
+            @Html.CheckBoxFor(m => m.Customer.IsSubscribedToNewsletter)Subscribed To NewsLetter?
+        </label>
+    </div>
+    @Html.HiddenFor(m => m.Customer.Id)
+    @Html.AntiForgeryToken() <!--to enable defense against CSRF "Cross Site Request Forgery-->
+    @*@Html.HiddenFor(m => m.Customer.MembershipType)*@
+    <button type="submit" class="btn btn-primary">Save</button>
+}
+
+<!--Here to enable client validation-->
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+}

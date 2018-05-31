@@ -1,0 +1,57 @@
+﻿@model IEnumerable<Vidly.Models.Customer>
+@using System.Data.Entity;
+
+@{
+    ViewBag.Title = "Customers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Customers</h2>
+
+@if (!Model.Any())
+{
+    <p> We don't have any customers yet.</p>
+}
+else
+{
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Customer</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var customer in Model)
+            {
+                <tr>
+                    <td> @Html.ActionLink(customer.Name, "Edit", "Customers", new { id = customer.Id}, null)</td>
+                    <td> @customer.MembershipType.Name </td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+}
+
+
+@*@{
+        var ispopular = Model.customers.Count > 0 ? "popular" : null;
+     }
+
+    <h2 class="@ispopular">@Model.Movie.Name</h2>
+
+    @if (Model.customers.Count == 0)
+    {
+        <p>NO ONE rented this movie</p>
+    }
+    else
+    {
+    <ul>
+        @foreach (var customer in Model.customers)
+        {
+            <li>@customer.Name</li>
+        }
+    </ul>
+    }*@
+
